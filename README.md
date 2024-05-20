@@ -1,1 +1,80 @@
 # Assessment
+# README
+
+## Overview
+
+The Response Citations Checker is a Streamlit-based application designed to fetch data from a specified API endpoint, process the data to identify citations, and display the results in a user-friendly interface. The application is particularly useful for analyzing response texts and determining which sources contributed to these responses.
+
+## Functionality
+
+### Key Features
+
+1. **Fetch Data from API**: The application retrieves paginated data from the provided API endpoint.
+2. **Process Data**: For each response text, it identifies and lists the sources that contributed to the response.
+3. **Display Results**: The results are displayed in a clear, readable format on a Streamlit web interface.
+
+### Detailed Explanation
+
+#### `fetch_data_from_api`
+
+- **Purpose**: This function fetches data from the API endpoint in a paginated manner.
+- **Operation**: 
+  - It initializes an empty list to store the data.
+  - It starts with the first page and continues fetching subsequent pages until no more data is available.
+  - For each page, it sends a GET request to the API endpoint with the current page number as a parameter.
+  - If the response status is 200 (OK), it checks the structure of the response to extract the relevant data.
+  - If the response status is 429 (Too Many Requests), it issues a warning about rate limits.
+  - If any other status is encountered, it displays an error message.
+  - The function returns a consolidated list of data items fetched from the API.
+
+#### `identify_citations`
+
+- **Purpose**: This function identifies citations (sources) that contributed to a given response text.
+- **Operation**:
+  - It initializes an empty list to store citations.
+  - For each source associated with a response, it checks if the source context is present in the response text.
+  - If a match is found, it adds the source's ID and link (if available) to the citations list.
+  - The function returns the list of identified citations.
+
+#### `main`
+
+- **Purpose**: This function serves as the main entry point for the Streamlit application.
+- **Operation**:
+  - It sets up the Streamlit interface with a title and initial message.
+  - It calls the `fetch_data_from_api` function to retrieve data.
+  - It displays the total number of items fetched.
+  - For each data item, it extracts the response text and sources.
+  - It calls the `identify_citations` function to get the list of citations for the response.
+  - It displays the response text and the identified citations (if any) in a readable format.
+  - If the data item structure is unexpected, it issues a warning message.
+
+### User Interaction
+
+- **Start Application**: The application is run using the `streamlit run app.py` command in the terminal.
+- **View Results**: Users can view the fetched data and identified citations directly on the Streamlit web interface.
+- **Warnings and Errors**: The application provides real-time feedback on data fetching issues, such as API rate limits or unexpected data formats.
+
+## Requirements
+
+- **Python Packages**: 
+  - `requests` for making HTTP requests to the API.
+  - `streamlit` for creating the web interface.
+
+## Usage
+
+1. **Install Dependencies**: Ensure `requests` and `streamlit` packages are installed.
+2. **Run the Application**: Execute the application using the command `streamlit run app.py`.
+3. **View the Interface**: Open the displayed URL in a web browser to interact with the application.
+
+## Conclusion
+
+The Response Citations Checker is a simple yet powerful tool to analyze and display citations for response texts retrieved from an API. It leverages Streamlit for an intuitive user interface, making it accessible and easy to use.
+
+To run the above code install the python library called streamlit using the command :-
+
+pip install streamlit
+
+
+And to run the code use the command :-
+
+streamlit run app.py
